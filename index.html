@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>English progress portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="page">
+    <header class="masthead">
+      <p class="eyebrow">English classes</p>
+      <h1>Progress passport</h1>
+      <p class="subtitle">Your progress, tasks and materials, all in one place.</p>
+    </header>
+
+    <div class="selector-row">
+      <label for="student-select">Student</label>
+      <select id="student-select" aria-label="Choose your name"></select>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <section id="portal" class="portal hidden">
+
+      <div class="passport-card">
+        <div class="stamp" id="level-stamp">
+          <svg viewBox="0 0 120 120" class="stamp-ring" aria-hidden="true">
+            <circle cx="60" cy="60" r="54" />
+            <path id="stamp-text-path" d="M 60,60 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="none"/>
+            <text class="stamp-ring-text">
+              <textPath href="#stamp-text-path" id="stamp-ring-label">ENGLISH CLASSES • ENGLISH CLASSES •</textPath>
+            </text>
+          </svg>
+          <span class="stamp-level" id="stamp-level">—</span>
+        </div>
+        <div class="passport-meta">
+          <p class="passport-name" id="student-name">—</p>
+          <p class="passport-level-label" id="student-level-label">Level —</p>
+        </div>
+      </div>
+
+      <section class="block">
+        <h2>Progress</h2>
+        <div class="skills" id="skills-list"></div>
+      </section>
+
+      <section class="block">
+        <h2>Tasks</h2>
+        <div class="tasks" id="tasks-list"></div>
+      </section>
+
+      <section class="block">
+        <h2>Materials</h2>
+        <div class="materials" id="materials-list"></div>
+      </section>
+
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

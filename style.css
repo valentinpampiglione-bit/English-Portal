@@ -1,0 +1,266 @@
+:root {
+  --paper: #f3f1ea;
+  --card: #fffdf8;
+  --ink: #21372f;
+  --ink-soft: #4b5c55;
+  --ink-faint: #8a9691;
+  --accent: #b7842a;
+  --accent-soft: #e9d6ac;
+  --line: #dcd6c4;
+  --danger: #a3402f;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.masthead {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.4rem;
+}
+
+.masthead h1 {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 34px;
+  margin: 0 0 0.4rem;
+  color: var(--ink);
+}
+
+.subtitle {
+  color: var(--ink-soft);
+  font-size: 15px;
+  margin: 0;
+}
+
+.selector-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+
+.selector-row label {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+select {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  min-width: 200px;
+}
+
+.status {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 14px;
+  min-height: 20px;
+}
+
+.status.error { color: var(--danger); }
+
+.hidden { display: none; }
+
+.passport-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.stamp {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stamp-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stamp-ring circle {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0.55;
+}
+
+.stamp-ring-text {
+  fill: var(--accent);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 7.2px;
+  letter-spacing: 1.5px;
+}
+
+.stamp-level {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--ink);
+}
+
+.passport-name {
+  font-family: "Fraunces", serif;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 4px;
+}
+
+.passport-level-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.block { margin-bottom: 2rem; }
+
+.block h2 {
+  font-family: "Fraunces", serif;
+  font-weight: 500;
+  font-size: 17px;
+  margin: 0 0 0.9rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.skill-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+}
+
+.skill-name {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0 0 8px;
+}
+
+.skill-bar-track {
+  height: 6px;
+  background: var(--accent-soft);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+.skill-pct {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.tasks, .materials {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--card);
+}
+
+.task-row, .material-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.task-row:last-child, .material-row:last-child { border-bottom: none; }
+
+.task-icon, .material-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--ink-faint);
+}
+
+.task-row.done .task-icon { color: var(--accent); }
+.task-row.done .task-title { color: var(--ink-soft); text-decoration: line-through; }
+
+.task-title, .material-title { flex: 1; }
+
+.task-due {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.material-row a {
+  color: var(--ink);
+  text-decoration: none;
+  flex: 1;
+}
+
+.material-row a:hover { color: var(--accent); }
+
+.empty-note {
+  padding: 14px;
+  color: var(--ink-faint);
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 420px) {
+  .masthead h1 { font-size: 28px; }
+  .passport-card { flex-direction: column; text-align: center; }
+}
