@@ -2,7 +2,7 @@
 // SETUP: paste your 4 published Google Sheet CSV links below.
 // You only do this once. After that, everything updates
 // automatically whenever you edit the Google Sheet.
-// See README.md for step-by-step instructions.
+// See README.md for step-by-step instructions
 // ─────────────────────────────────────────────────────────────
 
 const SHEET_URLS = {
