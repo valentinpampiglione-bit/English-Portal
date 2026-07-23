@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>English progress portal</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Progress Portal</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- PapaParse for CSV -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <main class="page">
+  <div class="page">
     <header class="masthead">
       <p class="eyebrow">English classes</p>
       <h1>Progress passport</h1>
@@ -20,67 +25,69 @@
 
     <div class="selector-row">
       <label for="student-select">Student</label>
-      <select id="student-select" aria-label="Choose your name"></select>
+      <select id="student-select"></select>
     </div>
-
+    
     <div id="status" class="status"></div>
 
-    <section id="portal" class="portal hidden">
-
+    <main id="portal" class="hidden">
+      <!-- Passport Card -->
       <div class="passport-card">
-        <div class="stamp" id="level-stamp">
-          <svg viewBox="0 0 120 120" class="stamp-ring" aria-hidden="true">
-            <circle cx="60" cy="60" r="54" />
-            <path id="stamp-text-path" d="M 60,60 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="none"/>
+        <div class="stamp">
+          <svg class="stamp-ring" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="46" />
+            <path id="stamp-circle-path" d="M 50, 50 m -42, 0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" />
             <text class="stamp-ring-text">
-              <textPath href="#stamp-text-path" id="stamp-ring-label">ENGLISH CLASSES • ENGLISH CLASSES •</textPath>
+              <textPath href="#stamp-circle-path" startOffset="0%">ENGLISH CLASSES • ENGLISH CLASSES •</textPath>
             </text>
           </svg>
           <span class="stamp-level" id="stamp-level">—</span>
         </div>
-        <div class="passport-meta">
-          <p class="passport-name" id="student-name">—</p>
+        <div class="passport-info">
+          <h2 class="passport-name" id="student-name">Student</h2>
           <p class="passport-level-label" id="student-level-label">Level —</p>
         </div>
       </div>
 
+      <!-- Vocabulary -->
       <section class="block">
         <h2>Vocabulary</h2>
-        <div class="vocab-folders" id="vocab-folders"></div>
+        <div id="vocab-folders" class="vocab-folders"></div>
       </section>
 
+      <!-- Tasks -->
       <section class="block">
         <h2>Tasks</h2>
-        <div class="tasks" id="tasks-list"></div>
+        <div id="tasks-list" class="tasks"></div>
       </section>
 
+      <!-- Materials -->
       <section class="block">
         <h2>Materials</h2>
-        <div class="materials" id="materials-list"></div>
+        <div id="materials-list" class="materials"></div>
       </section>
+    </main>
+  </div>
 
-    </section>
-  </main>
-
+  <!-- Lightbox -->
   <div id="lightbox" class="lightbox hidden">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
-    <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#8249;</button>
+    <button id="lightbox-close" class="lightbox-close" aria-label="Close">×</button>
     <figure class="lightbox-figure">
-      <div class="lightbox-img-wrap" id="lightbox-img-wrap">
+      <div id="lightbox-img-wrap" class="lightbox-img-wrap">
         <img id="lightbox-img" class="lightbox-img" src="" alt="" />
       </div>
       <div class="lightbox-zoom-controls">
-        <button type="button" class="lightbox-zoom-btn" id="zoom-out" aria-label="Zoom out">&minus;</button>
-        <span class="lightbox-zoom-level" id="zoom-level">100%</span>
-        <button type="button" class="lightbox-zoom-btn" id="zoom-in" aria-label="Zoom in">&plus;</button>
-        <button type="button" class="lightbox-zoom-btn" id="zoom-reset" aria-label="Reset zoom">&#8634;</button>
+        <button id="zoom-out" class="lightbox-zoom-btn" aria-label="Zoom out">−</button>
+        <span id="zoom-level" class="lightbox-zoom-level">100%</span>
+        <button id="zoom-in" class="lightbox-zoom-btn" aria-label="Zoom in">+</button>
+        <button id="zoom-reset" class="lightbox-zoom-btn" aria-label="Reset zoom">↺</button>
       </div>
+      <button id="lightbox-prev" class="lightbox-nav" aria-label="Previous">‹</button>
+      <button id="lightbox-next" class="lightbox-nav" aria-label="Next">›</button>
       <figcaption id="lightbox-caption" class="lightbox-caption"></figcaption>
     </figure>
-    <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next image">&#8250;</button>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script src="config.js"></script>
   <script src="script.js"></script>
 </body>
