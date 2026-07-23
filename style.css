@@ -242,19 +242,79 @@ select {
 
 .lightbox-figure {
   margin: 0;
-  max-width: min(90vw, 640px);
+  max-width: min(96vw, 960px);
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
 }
 
-.lightbox-img {
-  max-width: 100%;
-  max-height: 72vh;
+.lightbox-img-wrap {
+  width: 100%;
+  max-height: 82vh;
+  overflow: hidden;
   border-radius: 10px;
   background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+
+.lightbox-img-wrap.zoomed {
+  cursor: grab;
+}
+
+.lightbox-img-wrap.zoomed.dragging {
+  cursor: grabbing;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 82vh;
   object-fit: contain;
+  cursor: zoom-in;
+  transform-origin: center center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.lightbox-img.zoomed {
+  cursor: zoom-out;
+  max-width: none;
+  max-height: none;
+}
+
+.lightbox-zoom-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.lightbox-zoom-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #f3f1ea;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-zoom-btn:hover { background: rgba(255, 255, 255, 0.22); }
+
+.lightbox-zoom-level {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: #f3f1ea;
+  min-width: 42px;
+  text-align: center;
 }
 
 .lightbox-caption {
