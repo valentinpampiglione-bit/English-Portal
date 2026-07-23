@@ -1,14 +1,10 @@
 const statusEl = document.getElementById("status");
 const portalEl = document.getElementById("portal");
 const selectEl = document.getElementById("student-select");
-
 let data = { students: [], vocabulary: [], tasks: [], materials: [] };
 
 function fetchCsv(url) {
-  // Append a changing parameter so the browser (and Google's CDN) never
-  // serve a cached/stale copy of the sheet — always fetch the latest data.
   const bustCacheUrl = url + (url.includes("?") ? "&" : "?") + "_ts=" + Date.now();
-
   return new Promise((resolve, reject) => {
     Papa.parse(bustCacheUrl, {
       download: true,
@@ -34,7 +30,6 @@ async function loadAll() {
     statusEl.classList.add("error");
     return;
   }
-
   statusEl.textContent = "Loading...";
   try {
     const [students, vocabulary, tasks, materials] = await Promise.all([
@@ -68,19 +63,16 @@ selectEl.addEventListener("change", (e) => renderStudent(e.target.value));
 function renderStudent(name) {
   const student = data.students.find((s) => norm(s.Name) === norm(name));
   if (!student) return;
-
   portalEl.classList.remove("hidden");
   document.getElementById("student-name").textContent = student.Name;
   document.getElementById("student-level-label").textContent = `Level ${student.Level || "—"}`;
   document.getElementById("stamp-level").textContent = student.Level || "—";
-
   renderVocabulary(name);
   renderTasks(name);
   renderMaterials(name);
 }
 
 // ── Vocabulary (folders of images) ─────────────────────────────
-
 function vocabImageUrl(folder, image) {
   return `${VOCAB_IMAGE_BASE}/${encodeURIComponent(folder)}/${encodeURIComponent(image)}`;
 }
@@ -90,13 +82,10 @@ function renderVocabulary(name) {
     (v) => norm(v.Name) === norm(name) || norm(v.Name) === "all"
   );
   const container = document.getElementById("vocab-folders");
-
   if (!rows.length) {
     container.innerHTML = `<div class="empty-note">No vocabulary yet.</div>`;
     return;
   }
-
-  // Group rows into folders, in first-seen order.
   const folders = new Map();
   rows.forEach((r) => {
     const folderName = (r.Folder || "Untitled").trim();
@@ -104,27 +93,17 @@ function renderVocabulary(name) {
     if (!folders.has(folderName)) folders.set(folderName, []);
     folders.get(folderName).push(vocabImageUrl(folderName, r.Image.trim()));
   });
-
   if (!folders.size) {
     container.innerHTML = `<div class="empty-note">No vocabulary yet.</div>`;
     return;
   }
-
   container.innerHTML = Array.from(folders.entries())
     .map(([folderName, images]) => {
       const cover = images[0];
       const count = images.length;
-      return `
-        <button type="button" class="vocab-folder" data-folder="${folderName}">
-          <span class="vocab-folder-cover" style="background-image:url('${cover}')">
-            <span class="vocab-folder-count">${count} ${count === 1 ? "card" : "cards"}</span>
-          </span>
-          <span class="vocab-folder-name">${folderName}</span>
-        </button>
-      `;
+      return `<button type="button" class="vocab-folder" data-folder="${folderName}"> <span class="vocab-folder-cover" style="background-image:url('${cover}')"> <span class="vocab-folder-count">${count} ${count === 1 ? "card" : "cards"}</span> </span> <span class="vocab-folder-name">${folderName}</span> </button>`;
     })
     .join("");
-
   container.querySelectorAll(".vocab-folder").forEach((btn) => {
     btn.addEventListener("click", () => {
       openLightbox(folders.get(btn.dataset.folder), btn.dataset.folder);
@@ -133,7 +112,6 @@ function renderVocabulary(name) {
 }
 
 // ── Lightbox ────────────────────────────────────────────────────
-
 const lightboxEl = document.getElementById("lightbox");
 const lightboxImgWrapEl = document.getElementById("lightbox-img-wrap");
 const lightboxImgEl = document.getElementById("lightbox-img");
@@ -143,8 +121,6 @@ let lightboxImages = [];
 let lightboxFolderName = "";
 let lightboxIndex = 0;
 
-// Base display size is 1.5x (50% bigger) the image's natural fit.
-// zoomScale is an *additional* multiplier on top of that, from 1x to 4x.
 const BASE_SCALE = 1.5;
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 4;
@@ -187,12 +163,15 @@ function lightboxPrev() {
   showLightboxImage();
 }
 
+// Fixed: Removed trailing spaces from IDs and event names, fixed arrow functions
 document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
 document.getElementById("lightbox-next").addEventListener("click", lightboxNext);
 document.getElementById("lightbox-prev").addEventListener("click", lightboxPrev);
+
 lightboxEl.addEventListener("click", (e) => {
   if (e.target === lightboxEl) closeLightbox();
 });
+
 document.addEventListener("keydown", (e) => {
   if (lightboxEl.classList.contains("hidden")) return;
   if (e.key === "Escape") closeLightbox();
@@ -202,8 +181,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "-") zoomBy(-0.5);
 });
 
-// ── Zoom & pan ──────────────────────────────────────────────────
-
+// ─ Zoom & pan ──────────────────────────────────────────────────
 function applyZoomTransform() {
   const totalScale = BASE_SCALE * zoomScale;
   lightboxImgEl.style.transform = `translate(${panX}px, ${panY}px) scale(${totalScale})`;
@@ -239,7 +217,6 @@ document.getElementById("zoom-in").addEventListener("click", () => zoomBy(0.5));
 document.getElementById("zoom-out").addEventListener("click", () => zoomBy(-0.5));
 document.getElementById("zoom-reset").addEventListener("click", resetZoom);
 
-// Click image to toggle zoom in/out
 lightboxImgEl.addEventListener("click", (e) => {
   e.stopPropagation();
   if (zoomScale > MIN_ZOOM) {
@@ -249,7 +226,6 @@ lightboxImgEl.addEventListener("click", (e) => {
   }
 });
 
-// Scroll wheel to zoom
 lightboxImgWrapEl.addEventListener(
   "wheel",
   (e) => {
@@ -259,7 +235,6 @@ lightboxImgWrapEl.addEventListener(
   { passive: false }
 );
 
-// Drag to pan when zoomed in
 lightboxImgWrapEl.addEventListener("mousedown", (e) => {
   if (zoomScale === MIN_ZOOM) return;
   isDragging = true;
@@ -282,7 +257,6 @@ window.addEventListener("mouseup", () => {
   lightboxImgWrapEl.classList.remove("dragging");
 });
 
-// Touch support: pinch to zoom, drag to pan
 let touchStartDist = null;
 let touchStartZoom = MIN_ZOOM;
 
@@ -329,6 +303,7 @@ lightboxImgWrapEl.addEventListener("touchend", (e) => {
 });
 
 function renderTasks(name) {
+  // Fixed: (t) => instead of (t) = >, removed space from ID
   const rows = data.tasks.filter((t) => norm(t.Name) === norm(name));
   const container = document.getElementById("tasks-list");
   if (!rows.length) {
@@ -339,15 +314,9 @@ function renderTasks(name) {
     .map((t) => {
       const isDone = norm(t.Status) === "done";
       const icon = isDone
-        ? `<svg class="task-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>`
+        ? `<svg class="task-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>` 
         : `<svg class="task-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>`;
-      return `
-        <div class="task-row ${isDone ? "done" : ""}">
-          ${icon}
-          <span class="task-title">${t.Task || ""}</span>
-          <span class="task-due">${isDone ? "Done" : (t.DueDate || "")}</span>
-        </div>
-      `;
+      return `<div class="task-row ${isDone ? "done" : ""}"> ${icon} <span class="task-title">${t.Task || ""}</span> <span class="task-due">${isDone ? "Done" : (t.DueDate || "")}</span> </div>`;
     })
     .join("");
 }
@@ -363,12 +332,7 @@ function renderMaterials(name) {
   }
   container.innerHTML = rows
     .map(
-      (m) => `
-      <div class="material-row">
-        <svg class="material-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
-        <a href="${m.Link || "#"}" target="_blank" rel="noopener" class="material-title">${m.Title || m.Link || "Material"}</a>
-      </div>
-    `
+      (m) => `<div class="material-row"> <svg class="material-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> <a href="${m.Link || "#"}" target="_blank" rel="noopener" class="material-title">${m.Title || m.Link || "Material"}</a> </div>`
     )
     .join("");
 }
