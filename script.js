@@ -121,7 +121,7 @@ let lightboxImages = [];
 let lightboxFolderName = "";
 let lightboxIndex = 0;
 
-const BASE_SCALE = 1.5;
+const BASE_SCALE = 1;
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 4;
 let zoomScale = MIN_ZOOM;
