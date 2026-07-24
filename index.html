@@ -1,28 +1,61 @@
-<div id="lightbox" class="lightbox hidden">
-  <button class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
-
-  <!-- Previous Button (Left) -->
-  <button class="lightbox-nav" id="lightbox-prev" aria-label="Previous image">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-  </button>
-
-  <figure class="lightbox-figure">
-    <div class="lightbox-img-wrap" id="lightbox-img-wrap">
-      <img class="lightbox-img" id="lightbox-img" src="" alt="Vocabulary card" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- PapaParse is required for your script.js to read the CSVs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="config.js"></script>
+</head>
+<body>
+    <div id="status"></div>
+    
+    <div id="portal" class="hidden">
+        <h1 id="student-name"></h1>
+        <p id="student-level-label"></p>
+        
+        <select id="student-select"></select>
+        
+        <div id="stamp-level"></div>
+        
+        <section>
+            <h2>Vocabulary</h2>
+            <div id="vocab-folders"></div>
+        </section>
+        
+        <section>
+            <h2>Tasks</h2>
+            <div id="tasks-list"></div>
+        </section>
+        
+        <section>
+            <h2>Materials</h2>
+            <div id="materials-list"></div>
+        </section>
     </div>
     
-    <!-- Prettier Zoom Controls (No reset button) -->
-    <div class="lightbox-zoom-controls">
-      <button class="lightbox-zoom-btn" id="zoom-out" aria-label="Zoom out">−</button>
-      <span class="lightbox-zoom-level" id="zoom-level">100%</span>
-      <button class="lightbox-zoom-btn" id="zoom-in" aria-label="Zoom in">+</button>
+    <!-- Lightbox -->
+    <div id="lightbox" class="hidden">
+        <button id="lightbox-close" class="lightbox-nav">×</button>
+        <button id="lightbox-prev" class="lightbox-nav">‹</button>
+        <button id="lightbox-next" class="lightbox-nav">›</button>
+        
+        <div id="lightbox-img-wrap">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        
+        <div id="lightbox-caption"></div>
+        
+        <div class="lightbox-zoom-controls">
+            <button id="zoom-out" class="lightbox-zoom-btn">−</button>
+            <span id="zoom-level" class="lightbox-zoom-level">100%</span>
+            <button id="zoom-in" class="lightbox-zoom-btn">+</button>
+            <button id="zoom-reset" class="lightbox-zoom-btn">⟲</button>
+        </div>
     </div>
     
-    <figcaption class="lightbox-caption" id="lightbox-caption"></figcaption>
-  </figure>
-
-  <!-- Next Button (Right) -->
-  <button class="lightbox-nav" id="lightbox-next" aria-label="Next image">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-  </button>
-</div>
+    <script src="script.js"></script>
+</body>
+</html>
