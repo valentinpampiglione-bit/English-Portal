@@ -101,7 +101,12 @@ function renderVocabulary(name) {
     .map(([folderName, images]) => {
       const cover = images[0];
       const count = images.length;
-      return `<button type="button" class="vocab-folder" data-folder="${folderName}"> <span class="vocab-folder-cover" style="background-image:url('${cover}')"> <span class="vocab-folder-count">${count} ${count === 1 ? "card" : "cards"}</span> </span> <span class="vocab-folder-name">${folderName}</span> </button>`;
+      return `<button type="button" class="vocab-folder" data-folder="${folderName}">
+        <span class="vocab-folder-cover" style="background-image:url('${cover}')">
+          <span class="vocab-folder-count">${count} ${count === 1 ? "card" : "cards"}</span>
+        </span>
+        <span class="vocab-folder-name">${folderName}</span>
+      </button>`;
     })
     .join("");
   container.querySelectorAll(".vocab-folder").forEach((btn) => {
@@ -120,7 +125,6 @@ const zoomLevelEl = document.getElementById("zoom-level");
 let lightboxImages = [];
 let lightboxFolderName = "";
 let lightboxIndex = 0;
-
 const BASE_SCALE = 1;
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 4;
@@ -163,11 +167,9 @@ function lightboxPrev() {
   showLightboxImage();
 }
 
-// Fixed: Removed trailing spaces from IDs and event names, fixed arrow functions
 document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
 document.getElementById("lightbox-next").addEventListener("click", lightboxNext);
 document.getElementById("lightbox-prev").addEventListener("click", lightboxPrev);
-
 lightboxEl.addEventListener("click", (e) => {
   if (e.target === lightboxEl) closeLightbox();
 });
@@ -303,7 +305,6 @@ lightboxImgWrapEl.addEventListener("touchend", (e) => {
 });
 
 function renderTasks(name) {
-  // Fixed: (t) => instead of (t) = >, removed space from ID
   const rows = data.tasks.filter((t) => norm(t.Name) === norm(name));
   const container = document.getElementById("tasks-list");
   if (!rows.length) {
@@ -314,9 +315,13 @@ function renderTasks(name) {
     .map((t) => {
       const isDone = norm(t.Status) === "done";
       const icon = isDone
-        ? `<svg class="task-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>` 
+        ? `<svg class="task-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>`
         : `<svg class="task-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>`;
-      return `<div class="task-row ${isDone ? "done" : ""}"> ${icon} <span class="task-title">${t.Task || ""}</span> <span class="task-due">${isDone ? "Done" : (t.DueDate || "")}</span> </div>`;
+      return `<div class="task-row ${isDone ? "done" : ""}">
+        ${icon}
+        <span class="task-title">${t.Task || ""}</span>
+        <span class="task-due">${isDone ? "Done" : (t.DueDate || "")}</span>
+      </div>`;
     })
     .join("");
 }
@@ -331,10 +336,4 @@ function renderMaterials(name) {
     return;
   }
   container.innerHTML = rows
-    .map(
-      (m) => `<div class="material-row"> <svg class="material-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> <a href="${m.Link || "#"}" target="_blank" rel="noopener" class="material-title">${m.Title || m.Link || "Material"}</a> </div>`
-    )
-    .join("");
-}
-
-loadAll();
+    .
