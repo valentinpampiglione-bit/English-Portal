@@ -1,418 +1,77 @@
-:root {
-  --paper: #f3f1ea;
-  --card: #fffdf8;
-  --ink: #21372f;
-  --ink-soft: #4b5c55;
-  --ink-faint: #8a9691;
-  --accent: #b7842a;
-  --accent-soft: #e9d6ac;
-  --line: #dcd6c4;
-  --danger: #a3402f;
-  --radius: 14px;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: "IBM Plex Sans", sans-serif;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
-
-.page {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 2.5rem 1.5rem 4rem;
-}
-
-.masthead {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.eyebrow {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin: 0 0 0.4rem;
-}
-
-.masthead h1 {
-  font-family: "Fraunces", serif;
-  font-weight: 600;
-  font-size: 34px;
-  margin: 0 0 0.4rem;
-  color: var(--ink);
-}
-
-.subtitle {
-  color: var(--ink-soft);
-  font-size: 15px;
-  margin: 0;
-}
-
-.selector-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 2rem;
-}
-
-.selector-row label {
-  font-size: 13px;
-  color: var(--ink-soft);
-}
-
-select {
-  font-family: "IBM Plex Sans", sans-serif;
-  font-size: 14px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  background: var(--card);
-  color: var(--ink);
-  min-width: 200px;
-}
-
-.status {
-  text-align: center;
-  color: var(--ink-soft);
-  font-size: 14px;
-  min-height: 20px;
-}
-
-.status.error { color: var(--danger); }
-
-.hidden { display: none; }
-
-.passport-card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 1.75rem;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  position: relative;
-}
-
-.stamp {
-  position: relative;
-  width: 92px;
-  height: 92px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.stamp-ring {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.stamp-ring circle {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 1.5;
-  opacity: 0.55;
-}
-
-.stamp-ring-text {
-  fill: var(--accent);
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 7.2px;
-  letter-spacing: 1.5px;
-}
-
-.stamp-level {
-  font-family: "Fraunces", serif;
-  font-weight: 600;
-  font-size: 24px;
-  color: var(--ink);
-}
-
-.passport-name {
-  font-family: "Fraunces", serif;
-  font-size: 22px;
-  font-weight: 500;
-  margin: 0 0 4px;
-}
-
-.passport-level-label {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-  color: var(--ink-soft);
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.block { margin-bottom: 2rem; }
-
-.block h2 {
-  font-family: "Fraunces", serif;
-  font-weight: 500;
-  font-size: 17px;
-  margin: 0 0 0.9rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.vocab-folders {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 12px;
-}
-
-.vocab-folder {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: inherit;
-  cursor: pointer;
-  text-align: left;
-}
-
-.vocab-folder-cover {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 10px;
-  border: 1px solid var(--line);
-  background-color: var(--accent-soft);
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.vocab-folder:hover .vocab-folder-cover,
-.vocab-folder:focus-visible .vocab-folder-cover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(33, 55, 47, 0.14);
-}
-
-.vocab-folder-count {
-  position: absolute;
-  left: 8px;
-  bottom: 8px;
-  background: rgba(33, 55, 47, 0.72);
-  color: #fff;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
-  padding: 3px 7px;
-  border-radius: 999px;
-  letter-spacing: 0.02em;
-}
-
-.vocab-folder-name {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ink);
-}
-
-/* Lightbox */
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(20, 30, 26, 0.92);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  padding: 2rem 1rem;
-}
-
-.lightbox.hidden { display: none; }
-
-.lightbox-figure {
-  margin: 0;
-  max-width: min(96vw, 960px);
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.lightbox-img-wrap {
-  width: 100%;
-  max-height: 82vh;
-  overflow: hidden;
-  border-radius: 10px;
-  background: var(--card);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  touch-action: none;
-}
-
-.lightbox-img-wrap.zoomed {
-  cursor: grab;
-}
-
-.lightbox-img-wrap.zoomed.dragging {
-  cursor: grabbing;
-}
-
-.lightbox-img {
-  max-width: 100%;
-  max-height: 82vh;
-  object-fit: contain;
-  cursor: zoom-in;
-  transform-origin: center center;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-.lightbox-img.zoomed {
-  cursor: zoom-out;
-  max-width: none;
-  max-height: none;
-}
-
-.lightbox-zoom-controls {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.lightbox-zoom-btn {
-  background: rgba(255, 255, 255, 0.12);
-  border: none;
-  color: #f3f1ea;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 16px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.lightbox-zoom-btn:hover { background: rgba(255, 255, 255, 0.22); }
-
-.lightbox-zoom-level {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-  color: #f3f1ea;
-  min-width: 42px;
-  text-align: center;
-}
-
-.lightbox-caption {
-  color: #f3f1ea;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-  letter-spacing: 0.03em;
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 18px;
-  right: 22px;
-  background: none;
-  border: none;
-  color: #f3f1ea;
-  font-size: 30px;
-  line-height: 1;
-  cursor: pointer;
-  padding: 4px 8px;
-}
-
+/* Navigation Buttons - Positioned on sides */
 .lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.1);
-  border: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: #f3f1ea;
-  font-size: 34px;
-  line-height: 1;
   width: 48px;
   height: 48px;
   border-radius: 50%;
   cursor: pointer;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 0.5rem;
+  transition: all 0.2s ease;
+  z-index: 101;
+  padding: 0;
+}
+.lightbox-nav:hover { 
+  background: rgba(255, 255, 255, 0.25); 
+  transform: translateY(-50%) scale(1.05);
+}
+#lightbox-prev { left: 24px; }
+#lightbox-next { right: 24px; }
+
+/* Prettier Zoom Controls Pill */
+.lightbox-zoom-controls {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  background: rgba(20, 30, 26, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 6px 12px;
+  margin-top: 8px;
 }
 
-.lightbox-nav:hover { background: rgba(255, 255, 255, 0.2); }
-
-@media (max-width: 420px) {
-  .lightbox-nav { width: 40px; height: 40px; font-size: 28px; }
-}
-
-.tasks, .materials {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--card);
-}
-
-.task-row, .material-row {
+.lightbox-zoom-btn {
+  background: transparent;
+  border: none;
+  color: #f3f1ea;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 18px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--line);
-  font-size: 14px;
+  justify-content: center;
+  transition: background 0.2s;
+  padding: 0;
+  line-height: 1;
 }
+.lightbox-zoom-btn:hover { background: rgba(255, 255, 255, 0.15); }
 
-.task-row:last-child, .material-row:last-child { border-bottom: none; }
-
-.task-icon, .material-icon {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  color: var(--ink-faint);
-}
-
-.task-row.done .task-icon { color: var(--accent); }
-.task-row.done .task-title { color: var(--ink-soft); text-decoration: line-through; }
-
-.task-title, .material-title { flex: 1; }
-
-.task-due {
+.lightbox-zoom-level {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-  color: var(--ink-faint);
-  white-space: nowrap;
-}
-
-.material-row a {
-  color: var(--ink);
-  text-decoration: none;
-  flex: 1;
-}
-
-.material-row a:hover { color: var(--accent); }
-
-.empty-note {
-  padding: 14px;
-  color: var(--ink-faint);
   font-size: 13px;
+  color: #f3f1ea;
+  min-width: 48px;
   text-align: center;
+  font-variant-numeric: tabular-nums; /* Keeps numbers from jumping */
+  letter-spacing: 0.02em;
 }
 
-@media (max-width: 420px) {
-  .masthead h1 { font-size: 28px; }
-  .passport-card { flex-direction: column; text-align: center; }
+/* Mobile adjustments for nav buttons */
+@media (max-width: 600px) {
+  #lightbox-prev { left: 12px; }
+  #lightbox-next { right: 12px; }
+  .lightbox-nav { width: 40px; height: 40px; }
 }
